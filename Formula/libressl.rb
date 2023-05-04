@@ -2,9 +2,9 @@ class Libressl < Formula
   desc "Version of the SSL/TLS protocol forked from OpenSSL"
   homepage "https://www.libressl.org/"
   # Please ensure when updating version the release is from stable branch.
-  url "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.7.2.tar.gz"
-  mirror "https://mirrorservice.org/pub/OpenBSD/LibreSSL/libressl-3.7.2.tar.gz"
-  sha256 "b06aa538fefc9c6b33c4db4931a09a5f52d9d2357219afcbff7d93fe12ebf6f7"
+  url "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.3.5.tar.gz"
+  mirror "https://mirrorservice.org/pub/OpenBSD/LibreSSL/libressl-3.3.5.tar.gz"
+  sha256 "0a51393f0df1cf27e070054a2788a4d073339f363d79cd594076a1b4c48be9a5"
   license "OpenSSL"
 
   livecheck do
@@ -13,17 +13,15 @@ class Libressl < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "cef0f70deeefe8cd1dd62d17f946f01e7c305935aa33b97b016023b8bf3b015b"
-    sha256 arm64_monterey: "b66002cbc7d9b5caf3766d11296b328bdfc97721b15079e4882381ff24014282"
-    sha256 arm64_big_sur:  "ed7802d8997110b973962c84b97364d2db19dd86182aab3675adb1e9cb5fe343"
-    sha256 ventura:        "03150465bd4a1639951e4195bbdc4509807833b05a6a9cbaa87d225004a6640e"
-    sha256 monterey:       "32e89ea438e71bee8a583209d4374ab71fb67b1abc2bcb45f692cd45c5415af0"
-    sha256 big_sur:        "95be86d699e5ca7e62cfcba6dd0626ad09e83e5352debe3fd0d9ef87d4303919"
-    sha256 x86_64_linux:   "11f3460b11c6a4e556638fe397d59fd14d742b80858ea7c8db43220a6bc716a7"
+    sha256 arm64_big_sur: "bb0b93fb87cb0cb7caf4ace93bebe04e29a923c140375aa013a6a77dd27aad19"
+    sha256 big_sur:       "730c015b9fa817e1885e4da2440f86ee441dabd91e99d0465a70390262361996"
+    sha256 catalina:      "ce70f350875bc9fab948233b9d30c1545083e9a8204d24d769252f89fbdbccde"
+    sha256 mojave:        "af9065afe8ec39458e0227e2d874e08971e25763944ddd2d61fc9501f331b592"
+    sha256 x86_64_linux:  "a4e5d16b1e6ae117b89ea163e025648c1c2683c100ef2ce9e89f1ade402a0b77"
   end
 
   head do
-    url "https://github.com/libressl-portable/portable.git", branch: "master"
+    url "https://github.com/libressl-portable/portable.git"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
@@ -48,6 +46,7 @@ class Libressl < Formula
     system "./autogen.sh" if build.head?
     system "./configure", *args
     system "make"
+    system "make", "check"
     system "make", "install"
   end
 
